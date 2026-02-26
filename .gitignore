@@ -1,0 +1,8 @@
+# OS generated files
+.DS_Store
+
+# PyTorch model weights
+*.pth
+
+# Optional: Ignore folders containing datasets
+garbage_data/
