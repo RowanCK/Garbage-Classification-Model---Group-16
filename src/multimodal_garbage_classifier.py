@@ -60,14 +60,6 @@ class GarbageMultimodalDataset(Dataset):
                     if not description: 
                         description = "garbage item"
                     self.data.append((img_full_path, description, label))
-        
-        # For test small datasets
-        # import random
-        # random.seed(42)
-        # if len(self.data) > 0:
-        #     sample_size = max(1, len(self.data) // 100)
-        #     self.data = random.sample(self.data, sample_size)
-        # print(f"Loaded {len(self.data)} samples for {split}")
 
     def __len__(self):
         return len(self.data)
@@ -92,7 +84,6 @@ class GarbageMultimodalDataset(Dataset):
         }
 
 # Initialize DataLoaders
-# Data is in /home/yikai.chen/TL/garbage_data
 base_path = './garbage_data' 
 
 train_dataset = GarbageMultimodalDataset(base_path, split='Train', transform=train_transform)
@@ -139,8 +130,7 @@ class MultimodalClassifier(nn.Module):
         combined_features = torch.cat((img_features, text_features), dim=1)
         
         # Final prediction
-        logits = self.classifier(combined_features)
-        return logits
+        return self.classifier(combined_features)
 
 # Initialize model
 model = MultimodalClassifier(num_classes=4).to(device)
@@ -261,7 +251,6 @@ def evaluate_model(model, loader):
     plt.ylabel('True')
     plt.title('Confusion Matrix')
     plt.savefig('confusion_matrix.png')
-    # plt.show()
 
     # Show Incorrect Classifications
     print("\n--- Incorrect Classifications Analysis ---")
@@ -278,7 +267,6 @@ def evaluate_model(model, loader):
         plt.axis('off')
     plt.tight_layout()
     plt.savefig('error_analysis.png')
-    # plt.show()
 
 # Run Evaluation
 evaluate_model(model, test_loader)
