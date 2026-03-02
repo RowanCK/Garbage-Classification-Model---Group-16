@@ -53,8 +53,7 @@ class GarbageMultimodalDataset(Dataset):
             for img_name in os.listdir(cls_path):
                 if img_name.lower().endswith(('.png', '.jpg', '.jpeg')):
                     img_full_path = os.path.join(cls_path, img_name)
-                    # Extract description: "bear_spray_451.png" -> "bear spray"
-                    # We remove the trailing ID numbers and extension
+                    # Extract description: "greasy_pizza_box_1" becomes "greasy pizza box"
                     description = img_name.split('.')[0]
                     description = ''.join([i for i in description if not i.isdigit()]).replace('_', ' ').strip()
                     if not description: 
